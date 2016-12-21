@@ -1,0 +1,288 @@
+<div class="container">
+	<div class="header clearfix">
+		&nbsp;
+	</div>
+	<div class="jumbotron text-center">
+		<h1>Make Your Choice</h1>
+		<p class="lead">&nbsp;</p>
+		<p class="col-lg-12">
+			<div class="col-lg-6">
+				<a class="btn btn-lg btn-success btn-block" ng-click="courseWizard()" role="button">Save a Course</a>
+			</div>
+			<div class="col-lg-6">
+				<a class="btn btn-lg btn-success btn-block" ng-click="createCompany()" role="button">Create Company</a>
+			</div>
+		</p>
+		<div class="clearfix"></div>
+	</div>
+	<div class="row marketing"></div>
+</div>
+<script type="text/ng-template" id="firstDialog">
+	<div class="ngdialog-message">
+		<!-- *******************************************************
+		Wizard Markup Starts Here
+		-->
+		<xs-wizard has-save="true" has-breadcrumbs="true" save-text="Submit Course" on-page-change="vm.pageChange(state);" on-cancel="cancel();" on-save="save();">
+			<form action="" method="POST" role="form">
+				<xs-wizard-page page-tag="Course">
+					<div class="pane">
+						<div class="text-center">
+							<h3>Course Info</h3>
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<input type="text" ng-model="CourseName" placeholder="Course" uib-typeahead="address for address in getCourses($viewValue)" typeahead-loading="loadingCourses" typeahead-no-results="noResults" typeahead-template-url="courseList.html" class="form-control"
+								/>
+								<a type="button" ng-show="noResults" ng-hide="!noResults" ng-click="createCourse()" class="input-group-addon btn btn-default"><i class="fa fa-plus success-color"></i></a>
+								<a type="button" ng-show="!noResults" ng-hide="noResults" ng-click="addCourse(CourseName)" class="input-group-addon btn btn-default"><i class="fa fa-check"></i></a>
+							</div>
+							<i ng-show="loadingCourses" class="fa fa-refresh"></i>
+							<div ng-show="noResults" class="alert alert-warning">
+								<i class="fa fa-remove"></i> No Results Found
+							</div>
+						</div>
+						<ul class="list-group">
+							<li class="list-group-item" ng-show="!CourseExecuted.Course">
+								<!-- input type="hidden" ng-model="CourseExecuted.Course.id" value="{{ item.id }}" disable="disable" / -->
+								{{ CourseExecuted.course_name }} <br />
+								<small>{{ CourseExecuted.course_overview }}</small>
+								<!-- a class="pull-right btn btn-danger btn-xs" data-toggle="tooltip" data-placement="right" title="Remove Item" ng-click="removeCourse()" role="button"><i class="fa fa-minus"></i>
+								</a -->
+							</li>
+						</ul>
+					</div>
+				</xs-wizard-page>
+				<xs-wizard-page page-tag="Instructors">
+					<div class="pane">
+						<div class="text-center">
+							<h3>Instructors</h3>
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<input type="text" ng-model="SignerList" placeholder="Signer" uib-typeahead="address for address in getSigners($viewValue)" typeahead-loading="loadingSigners" typeahead-no-results="noResults" typeahead-template-url="otherList.html" class="form-control"
+								/>
+								<a type="button" ng-show="noResults" ng-hide="!noResults" ng-click="createSigner()" class="input-group-addon btn btn-default"><i class="fa fa-plus success-color"></i></a>
+								<a type="button" ng-show="!noResults" ng-hide="noResults" ng-click="addSigner(SignerList)" class="input-group-addon btn btn-default"><i class="fa fa-check"></i></a>
+							</div>
+							<i ng-show="loadingCourses" class="fa fa-refresh"></i>
+							<div ng-show="noResults" class="alert alert-warning">
+								<i class="fa fa-remove"></i> No Results Found
+							</div>
+						</div>
+						<ul class="list-group">
+							<li class="list-group-item" ng-repeat="item in CourseExecuted.Signers track by $index">
+								{{ item.signer_name }}
+								<a class="pull-right btn btn-danger btn-xs" data-toggle="tooltip" data-placement="right" title="Remove Item" ng-click="removeSigner($index)" role="button"><i class="fa fa-minus"></i>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</xs-wizard-page>
+				<xs-wizard-page page-tag="Students">
+					<div class="pane">
+						<div class="text-center">
+							<h3>Students</h3>
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<input type="text" ng-model="AttendantList" placeholder="Attendant" uib-typeahead="address for address in getAttendants($viewValue)" typeahead-loading="loadingAttendants" typeahead-no-results="noResults" typeahead-template-url="otherList.html" class="form-control"
+								/>
+								<a type="button" ng-show="noResults" ng-hide="!noResults" ng-click="createAttendant()" class="input-group-addon btn btn-default"><i class="fa fa-plus success-color"></i></a>
+								<a type="button" ng-show="!noResults" ng-hide="noResults" ng-click="addAttendant(AttendantList)" class="input-group-addon btn btn-default"><i class="fa fa-check"></i></a>
+							</div>
+							<i ng-show="loadingCourses" class="fa fa-refresh"></i>
+							<div ng-show="noResults" class="alert alert-warning">
+								<i class="fa fa-remove"></i> No Results Found
+							</div>
+						</div>
+						<ul class="list-group">
+							<li class="list-group-item" ng-repeat="item in CourseExecuted.Attendants track by $index">
+								{{ item.attendant_name }}
+								<a class="pull-right btn btn-danger btn-xs" data-toggle="tooltip" data-placement="right" title="Remove Item" ng-click="removeAttendant($index)" role="button"><i class="fa fa-minus"></i>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</xs-wizard-page>
+				<xs-wizard-page page-tag="Confirmation">
+					<div class="pane">
+						<div class="text-center">
+							<h3>Confirmation</h3>
+						</div>
+						<div class="col-md-12">
+							<h3 ng-hide="CourseExecuted.Course">
+								{{ CourseExecuted.course_name }} <br />
+								<small>{{ CourseExecuted.course_overview }}</small>
+							</h3>
+						</div>
+						<br />
+						<div class="col-md-12 all-group-list">
+							<ul class="col-md-6 list-group text-center">
+								<h4>Instructors</h4>
+								<li ng-repeat="item in CourseExecuted.Signers track by $index" class="list-group-item">
+									{{ item.signer_name }}
+								</li>
+							</ul>
+							<ul class="col-md-6 list-group text-center">
+								<h4>Students</h4>
+								<li ng-repeat="item in CourseExecuted.Attendants track by $index" class="list-group-item">
+									{{ item.attendant_name }}
+								</li>
+							</ul>
+						</div>
+					</div>
+				</xs-wizard-page>
+			</form>
+		</xs-wizard>
+		<!--
+		Wizard Markup Ends Here
+		******************************************************* -->
+	</div>
+</script>
+<script type="text/ng-template" id="courseList.html">
+	<a>
+		<span ng-bind-html="match.label.name + ': ' + match.label.overview | uibTypeaheadHighlight:query" ng-attr-title="{{match.label}}"></span>
+	</a>
+</script>
+<script type="text/ng-template" id="otherList.html">
+	<a>
+		<span ng-bind-html="match.label.name | uibTypeaheadHighlight:query" ng-attr-title="{{match.label}}"></span>
+	</a>
+</script>
+	<script id="createCourse.html" type="text/ng-template">
+		<div class="panel panel-info">
+			<div class="panel-heading text-center">
+				<h4 class="center-align"><i class="fa fa-building"></i>&nbsp;&nbsp;&nbsp;{{title}}</h4>
+			</div>
+			<form ng-submit="save()">
+				<div class="panel-body">
+					<div class="form-group">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-building"></i></span>
+							<input placeholder="Name" class="form-control" type="text" ng-required="true" ng-model="Course.name">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-align-justify"></i></span>
+							<input placeholder="Overview" class="form-control" type="text" ng-required="true" ng-model="Course.overview">
+						</div>
+					</div>
+					<div class="form-group">
+						<textarea placeholder="Content" class="form-control" type="text" ng-required="true" ng-model="Course.content"></textarea>
+					</div>
+					<div class="form-group">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-map"></i></span>
+							<input placeholder="Place" class="form-control" type="text" ng-required="true" ng-model="Course.place">
+							<!-- input type="text" ng-model="asyncSelected" placeholder="Location" uib-typeahead="address for address in getLocation($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control" -->
+						</div>
+						<!-- i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+						<div ng-show="noResults">
+							<i class="fa fa-remove"></i> No Results Found
+						</div -->
+					</div>
+					<div class="form-group">
+						<div class="input-group">
+							<span class="input-group-btn">
+								<button type="button" class="btn btn-default" ng-click="open1()"><i class="fa fa-calendar"></i></button>
+							</span>
+							<input placeholder="Start Date" type="text" ng-focus="open1()" class="form-control" uib-datepicker-popup ng-model="Course.date_start" ng-change="vm.error = ''" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close"
+							/>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="input-group">
+							<span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-click="open2()"><i class="fa fa-calendar"></i></button>
+						</span>
+							<input placeholder="Start End" type="text" ng-focus="open2()" class="form-control" uib-datepicker-popup ng-model="Course.date_end" ng-change="vm.error = ''" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close"
+							/>
+						</div>
+					</div>
+				</div>
+				<div class="panel-footer">
+					<div class="row">
+						<div class="col-md-6">
+							<button class="btn btn-warning btn-block" type="button" ng-click="cancel()">
+								Cancel
+							</button>
+						</div>
+						<div class="col-md-6">
+							<button class="btn btn-success btn-block" type="submit">
+								{{button}}
+							</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</script>
+	<script type="text/ng-template" id="createSigner.html">
+		<div class="panel panel-info ngdialog-message">
+			<div class="panel-heading text-center">
+				<h4 class="center-align"><i class="fa fa-building"></i>&nbsp;&nbsp;&nbsp;{{title}}</h4>
+			</div>
+			<form ng-submit="saveSigner()">
+				<div class="panel-body">
+					<div class="form-group">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-building"></i></span>
+							<input placeholder="Name" class="form-control" type="text" ng-model="Signer.name">
+						</div>
+					</div>
+				</div>
+				<div class="panel-footer">
+					<div class="row">
+						<div class="col-md-6">
+							<button  class="btn btn-warning btn-block" type="button" ng-click="cancel()">
+								Cancel
+							</button>
+						</div>
+						<div class="col-md-6">
+							<button class="btn btn-success btn-block" type="submit">
+								{{button}}
+							</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</script>
+	<script type="text/ng-template" id="createAttendant.html">
+		<div class="panel panel-info">
+			<div class="panel-heading text-center">
+				<h4 class="center-align"><i class="fa fa-building"></i>&nbsp;&nbsp;&nbsp;{{title}}</h4>
+			</div>
+			<form ng-submit="save()">
+				<div class="panel-body">
+					<div class="form-group">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-building"></i></span>
+							<input placeholder="Name" class="form-control" type="text" ng-model="Attendant.name">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-openid"></i></span>
+							<input placeholder="Passport/Country ID" class="form-control" type="text" ng-model="Attendant.identification">
+						</div>
+					</div>
+				</div>
+				<div class="panel-footer">
+					<div class="row">
+						<div class="col-md-6">
+							<button class="btn btn-warning btn-block" type="button" ng-click="cancel()">
+								Cancel
+							</button>
+						</div>
+						<div class="col-md-6">
+							<button class="btn btn-success btn-block" type="submit">
+								{{button}}
+							</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</script>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title></title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="/client/assets/css/style.min.css" rel="stylesheet" />
+    <link href="/client/assets/dist/css/AdminLTE.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/client/bower_components/sweetalert/dist/sweetalert.css">
+    <link rel="stylesheet" type="text/css" href="/client/bower_components/ng-dialog/css/ngDialog.css">
+    <link rel="stylesheet" type="text/css" href="/client/bower_components/ng-dialog/css/ngDialog-theme-default.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/client/assets/plugins/jquery-confirm/css/jquery-confirm.css">
+    <link rel="stylesheet" href="/client/assets/css/style.min.css">
+    <script src="/client/bower_components/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="/client/components/angular.js"></script>
+    <script src="/client/components/angular-resource.js"></script>
+    <script src="/client/components/angular-route.js"></script>
+    <script src="/client/components/angular-animate.js"></script>
+    <script src="/client/components/angular-touch.js"></script>
+    <script src="/client/bower_components/angular-sweetalert/SweetAlert.min.js"></script>
+    <script src="/client/bower_components/ng-dialog/js/ngDialog.min.js"></script>
+    <script src="/client/assets/js/jquery-2.1.0.min.js"></script>
+    <script src="/client/assets/plugins/bootstrap-notify/bootstrap-notify.min.js"></script>
+    <script src="/client/components/ui-bootstrap-tpls-1.2.4.js"></script>
+    <script src="/client/components/xs-wizard-widget.js"></script>
+    <!--[if lte IE 9]>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/Base64/0.3.0/base64.min.js"></script>
+	<![endif]-->
+    <script src="//cdn.jsdelivr.net/satellizer/0.14.0/satellizer.min.js"></script>
+    <script src="/client/scripts/controllers/app.js"></script>
+    <script src="/client/scripts/services/BootstrapService.js"></script>
+    <script src="/client/scripts/router.js"></script>
+    <script src="/client/scripts/controllers/home.js"></script>
+    <script src="/client/scripts/controllers/company.js"></script>
+    <script src="/client/scripts/controllers/user.js"></script>
+    <script src="/client/scripts/controllers/client.js"></script>
+    <script src="/client/scripts/controllers/course.js"></script>
+    <script src="/client/scripts/controllers/signer.js"></script>
+    <script src="/client/scripts/controllers/attendant.js"></script>
+    <!-- script src="/client/scripts/services/HomeService.js"></script -->
+    <script src="/client/scripts/services/UserService.js"></script>
+    <script src="/client/scripts/services/AttendantService.js"></script>
+    <script src="/client/scripts/services/SignerService.js"></script>
+    <script src="/client/scripts/services/CompanyService.js"></script>
+    <script src="/client/scripts/services/ClientService.js"></script>
+    <script src="/client/scripts/services/CourseService.js"></script>
+    <script src="/client/scripts/services/CoursesExecutedService.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="/client/assets/dist/js/app.min.js"></script>
+    <script src="/client/assets/js/app.js"></script>
+</head>
+
+<body id="joyApp" ng-app="joy" class="sidebar-mini" ng-show="(Data.success)">
+    <!-- Site wrapper -->
+    <div class="wrapper" bootstrap>
+        <!-- Include header contains -->
+        <div ng-include="'partials/header.html'"></div>
+        <!-- Left side column. contains the sidebar -->
+        <div ng-include="'partials/aside.html'"></div>
+        <!-- Principal Content -->
+        <div ng-view class="content-wrapper"></div>
+        <!-- Contains the Footer -->
+        <div ng-include="'partials/footer.html'"></div>
+    </div>
+</body>
+
+</html>

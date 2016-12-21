@@ -1,6 +1,6 @@
 <?php
 
-namespace API\Http;
+namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -13,11 +13,12 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
-        \API\Http\Middleware\EncryptCookies::class,
+        \App\Http\Middleware\EncryptCookies::class,
         \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
         \Illuminate\Session\Middleware\StartSession::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-        //\API\Http\Middleware\VerifyCsrfToken::class,
+        //\App\Http\Middleware\VerifyCsrfToken::class,
+        'Barryvdh\Cors\HandleCors',
     ];
 
     /**
@@ -26,8 +27,9 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \API\Http\Middleware\Authenticate::class,
+        'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'guest' => \API\Http\Middleware\RedirectIfAuthenticated::class,
+        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'auth0.jwt' => 'Auth0\Login\Middleware\Auth0JWTMiddleware',
     ];
 }

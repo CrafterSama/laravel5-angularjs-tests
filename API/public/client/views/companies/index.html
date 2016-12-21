@@ -1,0 +1,96 @@
+<div class="container">
+    <div class="row">
+        <section class="row search-box">
+            <div class="form-group">
+                <div class="col-lg-12">
+                    <input class="form-control" id="search" ng-model="search" placeholder="Search" type="search">
+                    </input>
+                </div>
+            </div>
+        </section>
+        <section class="row add-btn">
+            <span class="col-md-offset-10 col-md-2 ">
+                <a class="ng-click btn btn-success btn-block" id="addCompany" ng-click="createCompany()">
+                    <i class="fa fa-plus"></i>&nbsp;&nbsp;{{add}}
+                </a>
+            </span>
+        </section>
+        <section class="row">
+            <table class="table table-responsive table-striped display nowrap dataTable no-footer dtr-inline collapsed" id="dataTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Fiscal ID</th>
+                        <th>Address</th>
+                        <th>Phone</th>
+                        <th>Created At</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="Company in model | filter:search | orderBy:'-name':true">
+                        <td><a href="#/companies/{{Company.id}}">{{ Company.name }}</a></td>
+                        <td>{{ Company.fiscal_id }}</td>
+                        <td>{{ Company.address }}</td>
+                        <td>{{ Company.phone }}</td>
+                        <td>{{ getDate(Company.created_at) | date: yy-MM-dd }}</td>
+                        <td>
+                            <a class="ng-click warning-color" ng-click="editCompany(Company.id)"><i class="fa fa-pencil fa-2x"></i></a>&nbsp;&nbsp;
+                            <a class="ng-click danger-color" ng-click="removeCompany(Company.id);"><i class="fa fa-trash fa-2x"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div a="url" datapaginator=""></div>
+        </section>
+    </div>
+    <script id="create.html" type="text/ng-template">
+        <div class="panel panel-info">
+            <div class="panel-heading text-center">
+                <h4 class="center-align"><i class="fa fa-building"></i>&nbsp;&nbsp;&nbsp;{{title}}</h4>
+            </div>
+            <form ng-submit="save()">
+                <div class="panel-body">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-building"></i></span>
+                            <input placeholder="Name" class="form-control" type="text" ng-model="Company.name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-openid"></i></span>
+                            <input placeholder="Fiscal ID" class="form-control" type="text" ng-model="Company.fiscal_id">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-map"></i></span>
+                            <input placeholder="Address" class="form-control" type="text" ng-model="Company.address">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                            <input placeholder="Phone" class="form-control" type="text" ng-model="Company.phone">
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button class="btn btn-warning btn-block" type="button" ng-click="cancel()">
+                                Cancel
+                            </button>
+                        </div>
+                        <div class="col-md-6">
+                            <button class="btn btn-success btn-block" type="submit">
+                                {{button}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+</div>

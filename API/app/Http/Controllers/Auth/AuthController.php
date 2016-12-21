@@ -1,10 +1,12 @@
 <?php
 
-namespace API\Http\Controllers\Auth;
+namespace App\Http\Controllers\Auth;
 
-use API\User;
+use DB;
+use App\User;
+use App\Role;
 use Validator;
-use API\Http\Controllers\Controller;
+use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
@@ -56,9 +58,11 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
+        $idSupervisor = \DB::table('roles')->where('access', 2)->pluck('id');
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'id_rol' => $idSupervisor,
             'password' => bcrypt($data['password']),
         ]);
     }

@@ -7,6 +7,8 @@
  * @author   Taylor Otwell <taylorotwell@gmail.com>
  */
 
+header("Access-Control-Allow-Origin: *");
+
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader

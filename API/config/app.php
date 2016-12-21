@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -78,7 +78,7 @@ return [
     |
     */
 
-    'key' => env('APP_KEY', 'SomeRandomString'),
+    'key' => env('APP_KEY', 'KqwZhnPYIMtokU2v2cqRonEJznkrewNz'),
 
     'cipher' => 'AES-256-CBC',
 
@@ -140,10 +140,15 @@ return [
         /*
          * Application Service Providers...
          */
-        API\Providers\AppServiceProvider::class,
-        API\Providers\EventServiceProvider::class,
-        API\Providers\RouteServiceProvider::class,
-        Barryvdh\Cors\ServiceProvider::class,
+        App\Providers\AppServiceProvider::class,
+        App\Providers\AuthServiceProvider::class,
+        App\Providers\EventServiceProvider::class,
+        App\Providers\RouteServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
+        /*Barryvdh\DomPDF\ServiceProvider::class,*/
+        //'Auth0\Login\LoginServiceProvider',
+        'Tymon\JWTAuth\Providers\JWTAuthServiceProvider',
+        'Barryvdh\Cors\ServiceProvider',
 
     ],
 
@@ -173,6 +178,7 @@ return [
         'Eloquent'  => Illuminate\Database\Eloquent\Model::class,
         'Event'     => Illuminate\Support\Facades\Event::class,
         'File'      => Illuminate\Support\Facades\File::class,
+        'Gate'      => Illuminate\Support\Facades\Gate::class,
         'Hash'      => Illuminate\Support\Facades\Hash::class,
         'Input'     => Illuminate\Support\Facades\Input::class,
         'Inspiring' => Illuminate\Foundation\Inspiring::class,
@@ -192,6 +198,12 @@ return [
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
+        'Form'      => 'Collective\Html\FormFacade',
+        'Html'      => 'Collective\Html\HtmlFacade',
+        /*'PDF'       => 'Barryvdh\DomPDF\Facade',*/
+        //'Auth0'     => 'Auth0\Login\Facade\Auth0',
+        'JWTAuth' => 'Tymon\JWTAuth\Facades\JWTAuth',
+        
 
     ],
 

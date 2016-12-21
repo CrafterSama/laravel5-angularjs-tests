@@ -1,0 +1,159 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <span class="card-title">{{ Company.name }}</span>
+                </div>
+                <div class="panel-body">
+                    <p>{{ Company.fiscal_id }}</p>
+                    <p>{{ Company.address }}</p>
+                    <p>{{ Company.phone }}</p>
+                </div>
+                <div class="panel-footer">
+                    <a ng-click="editCompany(Company.id)"><i class="fa fa-pencil fa-2x"></i></a>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="row search-box">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            <input type="search" class="form-control" id="search" placeholder="Search" ng-model="search">
+                        </div>
+                    </div>
+                </div>
+                <div class="row add-btn">
+                    <span class="col-md-offset-10 col-md-2 ">
+						<a ng-click="createClient()" id="addClient" class="btn btn-success btn-block">
+							<i class="fa fa-plus"></i>&nbsp;&nbsp;{{add}}
+						</a>
+					</span>
+                </div>
+                <table id="dataTable" class="table table-responsive table-striped display nowrap dataTable no-footer dtr-inline collapsed">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Fiscal ID</th>
+                            <th>Address</th>
+                            <th>Phone</th>
+                            <th>Created At</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="Client in model | filter:search | orderBy:'-name':true">
+                            <td>{{ Client.name }}</td>
+                            <td>{{ Client.fiscal_id }}</td>
+                            <td>{{ Client.address }}</td>
+                            <td>{{ Client.phone }}</td>
+                            <td>{{ getDate(Client.created_at) | date: yy-MM-dd }}</td>
+                            <td class="text-center">
+                                <a class="warning-color ng-click" ng-click="editClient(Client.id)"><i class="fa fa-pencil fa-2x"></i></a> &nbsp;&nbsp;
+                                <a class="danger-color ng-click" ng-click="removeClient(Client.id);"><i class="fa fa-trash fa-2x"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div datapaginator a="url"></div>
+            </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="create.html">
+        <div class="panel panel-info">
+            <div class="panel-heading text-center">
+                <h4 class="center-align"><i class="fa fa-building"></i>&nbsp;&nbsp;&nbsp;{{titleCompany}} {{Company.name}}</h4>
+            </div>
+            <form ng-submit="save()">
+                <div class="panel-body">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-building"></i></span>
+                            <input placeholder="Name" class="form-control" type="text" ng-model="Company.name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-openid"></i></span>
+                            <input placeholder="Fiscal ID" class="form-control" type="text" ng-model="Company.fiscal_id">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-map"></i></span>
+                            <input placeholder="Address" class="form-control" type="text" ng-model="Company.address">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                            <input placeholder="Phone" class="form-control" type="text" ng-model="Company.phone">
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button class="btn btn-warning btn-block" type="button" ng-click="cancel()">
+                                Cancel
+                            </button>
+                        </div>
+                        <div class="col-md-6">
+                            <button class="btn btn-success btn-block" type="submit">
+                                {{buttonCompany}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+    <script type="text/ng-template" id="createClient.html">
+        <div class="panel panel-info">
+            <div class="panel-heading text-center">
+                <h4 class="center-align"><i class="fa fa-building"></i>&nbsp;&nbsp;&nbsp;{{title}}</h4>
+            </div>
+            <form ng-submit="saveClient()">
+                <div class="panel-body">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-building"></i></span>
+                            <input placeholder="Name" class="form-control" type="text" ng-model="Client.name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-openid"></i></span>
+                            <input placeholder="Fiscal ID" class="form-control" type="text" ng-model="Client.fiscal_id">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-map"></i></span>
+                            <input placeholder="Address" class="form-control" type="text" ng-model="Client.address">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                            <input placeholder="Phone" class="form-control" type="text" ng-model="Client.phone">
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button class="btn btn-warning btn-block" type="button" ng-click="cancel()">
+                                Cancel
+                            </button>
+                        </div>
+                        <div class="col-md-6">
+                            <button class="btn btn-success btn-block" type="submit">
+                                {{button}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+</div>
